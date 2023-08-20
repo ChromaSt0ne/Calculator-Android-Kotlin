@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonMultiply: Button
     private lateinit var buttonDivision: Button
 
+    private val operation : ArithmeticOperation = ArithmeticOperation()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,80 +62,45 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setSum() {
-        var num: Float? = null
-        var num2: Float? = null
-        if (editNum.text.toString().isNotEmpty()) {
-            num = editNum.text.toString().toFloatOrNull()
-        }
-        if (editNumTwo.text.toString().isNotEmpty()) {
-            num2 = editNumTwo.text.toString().toFloatOrNull()
-        }
-        if (num != null && num2 != null) {
-            val sum = num + num2
-            result.text = sum.toString()
+        if (operation.getNum1() != null && operation.getNum2() != null) {
+            result.text = operation.add().toString()
         }
     }
 
     private fun setDivide() {
-        var num: Float? = null
-        var num2: Float? = null
-        if (editNum.text.toString().isNotEmpty()) {
-            num = editNum.text.toString().toFloatOrNull()
-        }
-        if (editNumTwo.text.toString().isNotEmpty()) {
-            num2 = editNumTwo.text.toString().toFloatOrNull()
-        }
-        if (num != null && num2 != null) {
-            val sum = num / num2
-            result.text = sum.toString()
+        if (operation.getNum1() != null && operation.getNum2() != null) {
+            result.text = operation.divide().toString()
         }
     }
 
     private fun setSubtraction() {
-        var num: Float? = null
-        var num2: Float? = null
-        if (editNum.text.toString().isNotEmpty()) {
-            num = editNum.text.toString().toFloatOrNull()
-        }
-        if (editNumTwo.text.toString().isNotEmpty()) {
-            num2 = editNumTwo.text.toString().toFloatOrNull()
-        }
-        if (num != null && num2 != null) {
-            val sum = num - num2
-            result.text = sum.toString()
+        if (operation.getNum1() != null && operation.getNum2() != null) {
+            result.text = operation.subtract().toString()
         }
     }
 
     private fun setMultiplication() {
-        var num: Float? = null
-        var num2: Float? = null
-        if (editNum.text.toString().isNotEmpty()) {
-            num = editNum.text.toString().toFloatOrNull()
-        }
-        if (editNumTwo.text.toString().isNotEmpty()) {
-            num2 = editNumTwo.text.toString().toFloatOrNull()
-        }
-        if (num != null && num2 != null) {
-            val sum = num * num2
-            result.text = sum.toString()
+        if (operation.getNum1() != null && operation.getNum2() != null) {
+            result.text = operation.multiply().toString()
         }
     }
 
     private fun setButtonVisibility() {
-        var num: Float? = null
-        var num2: Float? = null
+        operation.setNum1(null)
+        operation.setNum2(null)
+
         if (editNum.text.toString().isNotEmpty()) {
-            num = editNum.text.toString().toFloatOrNull()
+            operation.setNum1(editNum.text.toString().toFloatOrNull())
         }
+
         if (editNumTwo.text.toString().isNotEmpty()) {
-            num2 = editNumTwo.text.toString().toFloatOrNull()
+            operation.setNum2(editNumTwo.text.toString().toFloatOrNull())
         }
-        if (num != null && num2 != null) {
+        if (operation.getNum1() != null && operation.getNum2() != null) {
             buttonAdd.isEnabled = true
             buttonMinus.isEnabled = true
             buttonMultiply.isEnabled = true
-            buttonDivision.isEnabled = num > 0 && num2 > 0
-
+            buttonDivision.isEnabled = operation.getNum2()!!.isNonZero()
         } else {
             buttonAdd.isEnabled = false
             buttonMinus.isEnabled = false
@@ -141,4 +108,5 @@ class MainActivity : AppCompatActivity() {
             buttonDivision.isEnabled = false
         }
     }
+
 }
